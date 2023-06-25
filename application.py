@@ -3,13 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 #setup application
-app = Flask(__name__) 
+application = Flask(__name__) 
 
 # {///} is a relative path; {////} is a absolute path
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db' 
+application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db' 
 #initialise database
-db=SQLAlchemy(app)
-app.app_context().push() #after this db got created
+db=SQLAlchemy(application)
+application.app_context().push() #after this db got created
 #create a model
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,7 +21,7 @@ class Todo(db.Model):
         return '<Task %r>' % self.id
 
 #routing part
-@app.route('/', methods = ['POST', 'GET']) 
+@application.route('/', methods = ['POST', 'GET']) 
 #define function for the route
 def index(): 
     if request.method == 'POST':
@@ -38,7 +38,7 @@ def index():
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template('index.html', tasks=tasks)
 
-@app.route('/delete/<int:id>')
+@application.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
     try:
@@ -48,7 +48,7 @@ def delete(id):
     except:
             return "Problem with deleting"
     
-@app.route('/update/<int:id>', methods = ['POST', 'GET'])
+@application.route('/update/<int:id>', methods = ['POST', 'GET'])
 def update(id):
      task = Todo.query.get_or_404(id)
      if request.method == 'POST':
@@ -64,5 +64,5 @@ def update(id):
     
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    application.run(debug=True)
      
