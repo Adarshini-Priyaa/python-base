@@ -1,0 +1,8 @@
+pip install virtualenv
+virtualenv env  
+env\Scripts\activate   --> to activate env
+pip install flask flask-sqlalchemy
+
+database creation:
+from app import db
+db.create_all() 
