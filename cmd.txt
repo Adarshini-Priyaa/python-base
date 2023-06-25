@@ -2,6 +2,7 @@ pip install virtualenv
 virtualenv env  
 env\Scripts\activate   --> to activate env
 pip install flask flask-sqlalchemy
+pip install -r requirements.txt
 
 database creation:
 from app import db
